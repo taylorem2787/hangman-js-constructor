@@ -37,7 +37,7 @@
 function roundComplete() {
 	console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + guessesLeft);
 
-	// Update the HTML to reflect the most recent count stats
+	// Update the HTML to reflect the most recent count statss
 	document.getElementById("numGuesses").innerHTML = guessesLeft;
 	document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
 	document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
