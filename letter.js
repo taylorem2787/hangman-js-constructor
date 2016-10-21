@@ -3,6 +3,10 @@ var letter = function(letters) {
 	this.lettersInWord = [];
 	this.wrongLetters = [];
 	this.blanksAndSuccesses = [];
+
+	for(var i = 0; i< letters.length; i++){
+    	this.lettersInWord[i] = '_';
+  	}
 };
 
 module.exports = letter;
