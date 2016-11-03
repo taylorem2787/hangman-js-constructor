@@ -1,12 +1,26 @@
-//  * `letter.js` should control whether or not a letter appears as a "_" or as itself on-screen.
-var letter = function(letters) {
-	this.lettersInWord = [];
-	this.wrongLetters = [];
-	this.blanksAndSuccesses = [];
+//=====================================CONSTRUCTOR FILE==============================================
+function Letter(theWord){
+  // TURN STRING INTO AN ARRAY
+  this.word = theWord.split('');
 
-	for(var i = 0; i< letters.length; i++){
-    	this.lettersInWord[i] = '_';
-  	}
+  this.LetterFunc = function() {
+    var wordArr = [];
+    // CREATES AN ARRAY W/ '_' TO MATCH LENGTH OF WORD
+    for(i = 0; i < this.word.length; i++){ 
+      wordArr.push('_');
+    };
+      return wordArr;
+  };
+  // GRABS BLANK ARRAY FROM LETTERFUNC
+  this.blankWordArr = this.LetterFunc(); 
+  // USER LETTER GUESS CHECKER
+  this.checkLetter = function(blankWordArr, realWord, userInput, index){ 
+    // IF USERS GUESS IS IN THE BLANK LETTER INDEX
+    if (realWord[index].toLowerCase() === userInput){ 
+      // POPULATE THE USER'S CORRECT LETTER GUESS TO REFLECT IT IN THE BLANK LETTER INDEX 
+      blankWordArr[index] = realWord[index]; 
+    };
+  };
 };
 
-module.exports = letter;
+module.exports['letter-import'] = Letter;

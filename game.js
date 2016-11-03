@@ -1,5 +1,11 @@
-//* game.js file: will randomly select a word for the player
-module exports.wordOptions = wordOptions
-var names = {
-	words : ["kelly", "zack", "slater", "screech", "lisa", "jessie", "mrbelding"];
-}
+function randomWord(){
+	var chars = ['kelly', 'zack', 'slater', 'screech', 'lisa', 'mrbelding', 'jessie'];
+	var randNum = Math.floor(Math.random() * chars.length);
+	return chars[randNum];
+};
+
+exports['random-word'] = randomWord;
+
+
+
+

@@ -1,93 +1,40 @@
-    //* `word.js` should contain all of the methods which will check the letters guessed versus the random word selected.
-    var randomOptions = require('random-options');
+var randomWord = require('./game.js')['random-word'];
+var userLetter = require('./letter.js')['letter-import'];
+// OBJ USED IN LETTER CONSTRUCTOR - TAKES RANDOMLY SELECTED STRING AS PARAMETER 
+var lettObj = new userLetter(randomWord()); 
+var wordObj = new Word();
 
-    var getWord = function() {
-    	var 
+function Word(word){
+  this.guessedLetters = [];
+  this.guessCount = 9; // USER GUESSES
+  this.currentWord = lettObj.word; // SETS VALUE TO THE VALUE IN LETTER OBJ. 
+  this.wordArr = lettObj.blankWordArr;
+
+  this.checkFunc = function(userInput) {
+    // CHECKS LOWER/UPPER CASE LETTER 
+    if (this.currentWord.indexOf(userInput.toLowerCase()) >= 0 || this.currentWord.indexOf(userInput.toUpperCase()) >= 0){
+        console.log('===========================================================================')
+        console.log('_______________________________ RIGHT! ____________________________________');
+        // PUSHES LETTER GUESSED INTO ARRAY
+        this.guessedLetters.push(userInput);
+      // LOOPS THROUGH CURRENT WORD
+      for (var i=0; i<this.currentWord.length; i++){ 
+          //adds the parameters to the check letter function stored in lettObj
+          lettObj.checkLetter(this.wordArr, this.currentWord, userInput, i); 
+      };
+    } 
+      else {
+        console.log('===========================================================================')
+        console.log('_________________________ WRONG - TRY AGAIN! ______________________________')
+        
+        // DECREMENT 
+        this.guessCount--;
+        // PUSHES LETTER GUESSED INTO ARRAY
+        this.guessedLetters.push(userInput); 
     };
+  };
+};
 
-    module.exports = getWord;
+module.exports['word-import'] = Word;
 
 
-
-//===================original hangman code========
-//     function checkLetters(letter) {
-// 	// Check if letter exists in word at all
-// 	var isLetterInWord = false;
-// 	for (var i=0; i<numBlanks; i++) {
-// 		if(selectedWord[i] == letter) {
-// 			isLetterInWord = true;
-// 		}
-// 	}
-
-// 	// Check where in word letter exists, then populate out blanks and sucesses
-// 	if (isLetterInWord) {
-// 		for (var i=0; i<numBlanks; i++) {
-// 			if(selectedWord[i] == letter) {
-// 				blanksAndSuccesses[i] = letter;
-// 			}
-// 		}	
-// 	}
-
-// 	// Letter wasnt found
-// 	else {
-// 		wrongLetters.push(letter);
-// 		guessesLeft	--
-// 	}
-// 	// Test and Debugging 
-// 	console.log(blanksAndSuccesses);
-// }
-
-// function roundComplete() {
-// 	console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + guessesLeft);
-
-// 	// Update the HTML to reflect the most recent count statss
-// 	document.getElementById("numGuesses").innerHTML = guessesLeft;
-// 	document.getElementById("wordToGuess").innerHTML = blanksAndSuccesses.join(" ");
-// 	document.getElementById("wrongGuesses").innerHTML = wrongLetters.join(" ");
-
-// 	// Check is user won
-// 	if (lettersinWord.toString() == blanksAndSuccesses.toString()) {
-// 		//Timeout to let winning letter populate
-// 		setTimeout(function(){ 
-// 			winCount++;
-// 			play("You Won!");
-// 		// Update the win counter 
-// 		document.getElementById("winCounter").innerHTML = winCount;
-// 		document.getElementById("bell").innerHTML= 
-// 		startGame();
-
-// 		}, 1000);
-// 	}
-
-// 	// Check if user lost
-// 	else if (guessesLeft == 0) {
-// 		lossCount++;
-// 		alert("You Lost!");
-
-// 		// Update HTML 
-// 		document.getElementById("lossCounter").innerHTML = lossCount;
-
-// 		startGame();
-// 	}
-// }
-// //MAIN PROCESS ()
-// //--------------------------------------------------------------
-
-// // Initiates the code the first time
-// startGame();
-
-// //Register keyclicks
-
-// document.onkeyup = function(event) {
-// 	var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-// 	checkLetters(letterGuessed);
-// 	roundComplete();
-
-// 	//Testing / Debugging
-// 	console.log(letterGuessed); 
-
-// }
-// function playSound (bell) {
-// 	var thissound = document.getElementById(bell);
-// 	thissound.play();
-// }
